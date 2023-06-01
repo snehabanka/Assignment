@@ -1,0 +1,46 @@
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'flights';
+
+
+ALTER TABLE flights
+ALTER COLUMN air_time TYPE INTEGER USING air_time::integer;
+
+ALTER TABLE flights
+ALTER COLUMN arr_delay TYPE INTEGER USING arr_delay::integer;
+
+ALTER TABLE flights
+ALTER COLUMN dep_delay TYPE INTEGER USING dep_delay::integer;
+
+1
+
+select flights.carrier,count(carrier) as "no of flights",airlines."AIRLINE" from flights left join airlines on flights.carrier=airlines."IATA_CODE" group by carrier,airlines."AIRLINE" order by count(carrier) desc limit 1
+
+2
+
+select sum(air_time) as "number of fly hours",carrier,airlines."AIRLINE" from flights left join airlines on flights.carrier=airlines."IATA_CODE"  group by carrier,airlines."AIRLINE" order by sum(air_time) desc limit 1;
+
+3
+select sum(air_time) as "number of fly hours",flight from flights group by flight order by sum(air_time) desc limit 1;
+
+4
+
+
+SELECT airports."CITY", airports."AIRPORT", flights.dest
+FROM flights
+LEFT JOIN airports
+ON flights.dest = airports."IATA_CODE"
+GROUP BY airports."CITY", airports."AIRPORT", flights.dest,flights.arr_delay ORDER BY flights.arr_delay desc limit 1;
+
+5
+
+select flights.carrier,sum(flights.distance) as "total distance",airlines."AIRLINE" from flights left join airlines on flights.carrier=airlines."IATA_CODE" group by carrier,airlines."AIRLINE" order by sum(distance) desc limit 1
+
+6
+
+
+select count(origin) as a ,origin from flights group by origin order by a desc limit 1
+
+
+ 
+
