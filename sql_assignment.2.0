@@ -1,0 +1,44 @@
+SELECT carrier as manufacturer, COUNT(*) AS flight_count
+FROM flights
+GROUP BY carrier
+ORDER BY flight_count DESC
+LIMIT 1;
+
+SELECT carrier, SUM(air_time) AS total_flying_hours
+FROM flights
+GROUP BY carrier
+ORDER BY total_flying_hours DESC
+LIMIT 1;
+
+SELECT flight, SUM(air_time) AS total_flying_hours
+FROM flights
+GROUP BY flight
+ORDER BY total_flying_hours DESC
+LIMIT 1;
+
+SELECT dest, SUM(arr_delay) AS total_delay_time
+FROM flights
+GROUP BY dest
+ORDER BY total_delay_time DESC
+LIMIT 1;
+
+SELECT carrier, SUM(distance) AS total_distance
+FROM flights
+GROUP BY carrier
+ORDER BY total_distance DESC
+LIMIT 1;
+
+
+SELECT airport, COUNT(*) AS total_flights
+FROM (
+    SELECT origin AS airport
+    FROM flights
+    WHERE day IN (0, 6) -- 0 represents Sunday, 6 represents Saturday
+    UNION ALL
+    SELECT dest AS airport
+    FROM flights
+    WHERE day IN (0, 6) -- 0 represents Sunday, 6 represents Saturday
+) AS airport_flights
+GROUP BY airport
+ORDER BY total_flights DESC
+LIMIT 1;
